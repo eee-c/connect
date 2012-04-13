@@ -1,22 +1,30 @@
 
-TEST = node_modules/.bin/expresso
-TESTS ?= test/*.test.js
-SRC = $(shell find lib -type f -name "*.js")
+TESTS = test/*.js
+REPORTER = dot
+DOX = ./node_modules/.bin/dox
+
+SRC = $(shell find lib/*.js lib/middleware/*.js)
+HTML = $(SRC:.js=.html)
 
 test:
-	@NODE_ENV=test ./$(TEST) \
-		-I lib \
-		$(TEST_FLAGS) $(TESTS)
+	@NODE_ENV=test ./node_modules/.bin/mocha \
+		--reporter $(REPORTER) \
+		$(TESTS)
 
-test-cov:
-	@$(MAKE) test TEST_FLAGS="--cov"
+docs: $(HTML)
+	@mv $(HTML) docs
 
-docs:
-	@mkdir -p docs
-	@node support/docs.js $(SRC)
+test-cov: lib-cov
+	@CONNECT_COV=1 $(MAKE) test REPORTER=html-cov > coverage.html
+
+lib-cov:
+	@jscoverage lib $@
+
+%.html: %.js
+	$(DOX) < $< | node support/docs > $@
 
 docclean:
-	rm -f docs/*.{html,json}
+	rm -f $(HTML)
 
 site: docclean docs
 	rm -fr /tmp/docs \
@@ -25,4 +33,4 @@ site: docclean docs
 	  && cp -fr /tmp/docs/* . \
 	  && echo "done"
 
-.PHONY: site docs test test-cov docclean
+.PHONY: test-cov site docs test docclean

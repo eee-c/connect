@@ -1,23 +1,23 @@
 {
   "name": "connect-unstable",
-  "version": "1.6.0",
+  "version": "2.1.2",
   "description": "Unstable, tracking fork of the real connect middleware.  Only use if you really, *really* need node 0.5+.",
   "keywords": ["framework", "web", "middleware", "connect", "rack"],
   "repository": "git://github.com/eee-c/connect.git",
   "author": "Chris Strom <chris@eeecomputes.com> (http://eeecomputes.com)",
   "dependencies": {
-    "qs": ">= 0.3.0",
-    "mime": ">= 0.0.1"
+    "qs": "0.4.2",
+    "mime": "1.2.4",
+    "formidable": "1.0.9",
+    "crc": "0.1.0",
+    "debug": "*"
   },
   "devDependencies": {
-    "expresso": "0.7.6",
-    "koala": "0.1.2",
-    "less": "1.1.1",
-    "sass": "0.5.0",
-    "markdown": "0.2.1",
-    "ejs": "0.4.3",
-    "should": "0.2.1"
+    "should": "*",
+    "mocha": "*",
+    "jade": "*",
+    "dox": "*"
   },
   "main": "index",
-  "engines": { "node": ">= 0.4.1" }
+  "engines": { "node": ">= 0.5.0 < 0.9.0" }
 }
